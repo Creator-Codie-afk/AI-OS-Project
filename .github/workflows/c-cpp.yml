@@ -1,0 +1,22 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+   steps:
+  - uses: actions/checkout@v4
+  - name: Navigate to Kernel Directory
+    run: cd Kernel
+  - name: Make test.sh Executable
+    run: chmod +x test.sh
+  - name: Run test.sh
+    run: ./test.sh
