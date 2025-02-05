@@ -1,5 +1,6 @@
 # main.py - File Management Module
 import os
+import hashlib
 
 def list_files(directory):
     """
@@ -31,43 +32,47 @@ def read_file(file_path):
     except FileNotFoundError:
         return "File not found."
 
-def update_file(file_path, content):
+def encrypt_file(file_path, key):
     """
-    Function to update the content of a file.
+    Function to encrypt a file using a simple XOR cipher.
     """
     try:
-        with open(file_path, 'a') as file:
-            file.write(content)
-        return "File updated successfully."
+        with open(file_path, 'rb') as file:
+            data = file.read()
+        encrypted_data = bytes([b ^ key for b in data])
+        with open(file_path, 'wb') as file:
+            file.write(encrypted_data)
+        return "File encrypted successfully."
     except FileNotFoundError:
         return "File not found."
 
-def delete_file(file_path):
+def search_files(directory, query):
     """
-    Function to delete a file.
+    Function to search for files containing a specific query.
     """
     try:
-        os.remove(file_path)
-        return "File deleted successfully."
+        files = os.listdir(directory)
+        result = []
+        for file in files:
+            if query in file:
+                result.append(file)
+        return result
     except FileNotFoundError:
-        return "File not found."
+        return "Directory not found."
 
 if __name__ == "__main__":
-    # Test file management functions
+    # Test the file management functions
     directory = input("Enter directory path: ")
-    print(f"Files in {directory}: {list_files(directory)}")
-    
+    print("Files in directory:", list_files(directory))
+
     file_path = input("Enter file path to create: ")
     content = input("Enter content for the file: ")
     print(create_file(file_path, content))
-    
-    print(f"Content of {file_path}: {read_file(file_path)}")
-    
-    update_content = input("Enter content to append to the file: ")
-    print(update_file(file_path, update_content))
-    
-    print(f"Updated content of {file_path}: {read_file(file_path)}")
-    
-    delete_choice = input("Do you want to delete the file? (yes/no): ")
-    if delete_choice.lower() == 'yes':
-        print(delete_file(file_path))
+
+    print("Content of the file:", read_file(file_path))
+
+    key = int(input("Enter encryption key (0-255): "))
+    print(encrypt_file(file_path, key))
+
+    query = input("Enter query to search for files: ")
+    print("Files containing query:", search_files(directory, query))
