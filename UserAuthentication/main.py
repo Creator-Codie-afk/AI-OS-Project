@@ -1,20 +1,23 @@
 # main.py - User Authentication Module
 import hashlib
 import uuid
+import random
 
 # Simple in-memory user database for demonstration purposes
 user_db = {}
 session_db = {}
+user_roles = {}
 
-def register_user(username, password):
+def register_user(username, password, role):
     """
-    Function to register a new user.
+    Function to register a new user with a specific role.
     """
     if username in user_db:
         return "User already exists."
     # Hash the password for secure storage
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     user_db[username] = hashed_password
+    user_roles[username] = role
     return "User registered successfully."
 
 def authenticate_user(username, password):
@@ -30,19 +33,38 @@ def authenticate_user(username, password):
         return f"Authentication successful. Session token: {session_token}"
     return "Authentication failed."
 
-def logout_user(username):
+def multi_factor_authentication(username):
     """
-    Function to log out a user and invalidate the session.
+    Function to perform multi-factor authentication.
     """
-    if username in session_db:
-        del session_db[username]
-        return "User logged out successfully."
-    return "User not logged in."
+    if username not in session_db:
+        return "User not authenticated."
+    # Simulate sending a verification code (e.g., via email or SMS)
+    verification_code = random.randint(100000, 999999)
+    print(f"Verification code sent to user: {verification_code}")
+    entered_code = int(input("Enter the verification code: "))
+    if entered_code == verification_code:
+        return "Multi-factor authentication successful."
+    return "Multi-factor authentication failed."
+
+def check_user_role(username, role):
+    """
+    Function to check if a user has a specific role.
+    """
+    return user_roles.get(username) == role
 
 if __name__ == "__main__":
-    # Test user registration and authentication
-    username = input("Enter username: ")
+    # Test the user authentication functions
+    username = input("Enter username to register: ")
     password = input("Enter password: ")
-    print(register_user(username, password))
+    role = input("Enter user role (admin/user): ")
+    print(register_user(username, password, role))
+
+    username = input("Enter username to authenticate: ")
+    password = input("Enter password: ")
     print(authenticate_user(username, password))
-    print(logout_user(username))
+
+    print(multi_factor_authentication(username))
+
+    role_to_check = input("Enter role to check: ")
+    print(f"User has role {role_to_check}: {check_user_role(username, role_to_check)}")
