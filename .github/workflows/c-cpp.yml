@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-   - uses: actions/checkout@v4
+  es: actions/checkout@v4
 - name: Navigate to Kernel Directory
   run: cd Kernel
 - name: Make test.sh Executable
