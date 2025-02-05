@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-  es: actions/checkout@v4
-- name: Navigate to Kernel Directory
+   /checkout@v4
+- na            me      : Navigate to Kernel Directory
   run: cd Kernel
 - name: Make test.sh Executable
   run: chmod +x test.sh
