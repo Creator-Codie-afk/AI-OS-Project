@@ -12,11 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-   steps:
-  - uses: actions/checkout@v4
-  - name: Navigate to Kernel Directory
-    run: cd Kernel
-  - name: Make test.sh Executable
-    run: chmod +x test.sh
-  - name: Run test.sh
-    run: ./test.sh
+   - uses: actions/checkout@v4
+- name: Navigate to Kernel Directory
+  run: cd Kernel
+- name: Make test.sh Executable
+  run: chmod +x test.sh
+- name: Run test.sh
+  run: ./test.sh
