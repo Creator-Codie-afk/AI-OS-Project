@@ -56,7 +56,7 @@ The AI-OS project aims to develop a basic operating system with AI-enhanced feat
 - **README.md:** This file, containing an overview and instructions for the project.
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
+C ontributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
 
 ## License
 
